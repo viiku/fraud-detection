@@ -1,7 +1,6 @@
 package com.viiku.frauddetection.repository;
 
 import com.viiku.frauddetection.models.entities.TransactionEntity;
-import com.viiku.frauddetection.models.payloads.response.TransactionResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,4 +20,7 @@ public interface TransactionRepository extends JpaRepository<TransactionEntity, 
     List<TransactionEntity> findRecentTransactionsByAccount(
             @Param("accountId") String accountId,
             @Param("localDateTime") LocalDateTime localDateTime);
+
+
+    Long countByAccountIdAndTimestampAfter(String accountId, LocalDateTime since);
 }

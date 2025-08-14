@@ -11,6 +11,7 @@ import com.viiku.frauddetection.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -25,11 +26,13 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository transactionRepository;
     private final RedisTemplate<String, Object> redisTemplate;
     private final TransactionMapper transactionMapper;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
-    public TransactionServiceImpl(TransactionRepository transactionRepository, RedisTemplate redisTemplate, TransactionMapper transactionMapper) {
+    public TransactionServiceImpl(TransactionRepository transactionRepository, RedisTemplate redisTemplate, TransactionMapper transactionMapper, KafkaTemplate<String, Object> kafkaTemplate) {
         this.transactionRepository = transactionRepository;
         this.redisTemplate = redisTemplate;
         this.transactionMapper = transactionMapper;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     @Override
@@ -39,10 +42,10 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionEntity savedTransaction = transactionRepository.save(transactionMapper.mapToEntity(transactionDto));
 //
 //        // Cache recent transaction for quick access
-        cacheTransaction(transactionDto);
+//        cacheTransaction(transactionDto);
 //
 //        // Send to Kafka for fraud detection
-//        kafkaTemplate.send("transaction-events", savedTransaction);
+        kafkaTemplate.send("transaction-events", savedTransaction);
 //
 //        // Update metrics
 //        transactionCounter.increment();
@@ -109,7 +112,8 @@ public class TransactionServiceImpl implements TransactionService {
                 .suspectedFraud(false)
                 .build();
     }
-//    public Long getTransactionCountSince(String accountId, LocalDateTime since) {
-//        return transactionRepository.countTransactionsByAccountSince(accountId, since);
-//    }
+
+    public Long getTransactionCountSince(String accountId, LocalDateTime since) {
+        return transactionRepository.countByAccountIdAndTimestampAfter(accountId, since);
+    }
 }

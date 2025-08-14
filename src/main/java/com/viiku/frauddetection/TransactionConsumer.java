@@ -1,0 +1,44 @@
+//package com.viiku.frauddetection;
+//
+//import com.viiku.frauddetection.models.dtos.TransactionDto;
+//import com.viiku.frauddetection.service.FraudDetectionService;
+//import lombok.extern.slf4j.Slf4j;
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.kafka.annotation.KafkaListener;
+//import org.springframework.kafka.support.Acknowledgment;
+//import org.springframework.kafka.support.KafkaHeaders;
+//import org.springframework.messaging.handler.annotation.Header;
+//import org.springframework.messaging.handler.annotation.Payload;
+//
+//@Slf4j
+//@Configuration
+//public class TransactionConsumer {
+//
+//    private final FraudDetectionService fraudDetectionService;
+//
+//    public TransactionConsumer(FraudDetectionService fraudDetectionService) {
+//        this.fraudDetectionService = fraudDetectionService;
+//    }
+//
+//    @KafkaListener(topics = "transaction-events", groupId = "fraud-detection-group")
+//    public void processTransaction(
+//            @Payload TransactionDto transaction,
+//            @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
+//            @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition,
+//            @Header(KafkaHeaders.OFFSET) long offset,
+//            Acknowledgment acknowledgment) {
+//
+//        try {
+//            log.info("Processing transaction: {} from topic: {}, partition: {}, offset: {}",
+//                    transaction.getTransactionId(), topic, partition, offset);
+//
+//            fraudDetectionService.detectFraud(transaction);
+//
+//            acknowledgment.acknowledge();
+//
+//        } catch (Exception e) {
+//            log.error("Error processing transaction: {}", transaction.getTransactionId(), e);
+//            // Could implement retry logic or DLQ here
+//        }
+//    }
+//}
