@@ -1,19 +1,22 @@
-package com.viiku.frauddetection.models.entity;
+package com.viiku.frauddetection.models.entities;
 
+import com.viiku.frauddetection.common.model.entity.BaseEntity;
+import com.viiku.frauddetection.models.enums.TransactionChannel;
+import com.viiku.frauddetection.models.enums.TransactionType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
+@Setter
+@Getter
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "transactions")
-public class TransactionEntity {
+public class TransactionEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +38,7 @@ public class TransactionEntity {
     private String currency;
 
     @Column(nullable = false)
-    private String transactionType;
+    private TransactionType transactionType;
 
     @Column(nullable = false)
     private String merchantId;
@@ -53,10 +56,5 @@ public class TransactionEntity {
     private String deviceId;
 
     @Column
-    private String channel; // ATM, ONLINE, POS
-
-//    @PrePersist
-//    protected void onCreate() {
-//        timestamp = LocalDateTime.now();
-//    }
+    private TransactionChannel channel;
 }

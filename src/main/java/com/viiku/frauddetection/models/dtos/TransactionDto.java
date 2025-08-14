@@ -1,21 +1,25 @@
-package com.viiku.frauddetection.models.payloads.response;
+package com.viiku.frauddetection.models.dtos;
 
 import com.viiku.frauddetection.models.enums.TransactionChannel;
-import com.viiku.frauddetection.models.enums.TransactionStatus;
 import com.viiku.frauddetection.models.enums.TransactionType;
-import lombok.*;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Getter
 @Setter
+@Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class TransactionResponse {
+public class TransactionDto {
 
-    private String transactionId;
+    private final String transactionId;
     private String accountId;
     private String bankId;
     private BigDecimal amount;
@@ -27,7 +31,4 @@ public class TransactionResponse {
     private String ipAddress;
     private String deviceId;
     private TransactionChannel channel;
-    private TransactionStatus status;
-    private String message;
-    private boolean suspectedFraud;
 }

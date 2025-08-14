@@ -1,6 +1,5 @@
 package com.viiku.frauddetection.controllers;
 
-import com.viiku.frauddetection.models.Transaction;
 import com.viiku.frauddetection.models.payloads.request.TransactionRequest;
 import com.viiku.frauddetection.models.payloads.response.TransactionResponse;
 import com.viiku.frauddetection.service.TransactionService;
