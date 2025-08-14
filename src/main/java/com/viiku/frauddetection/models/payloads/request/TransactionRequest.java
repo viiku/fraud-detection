@@ -32,7 +32,7 @@ public class TransactionRequest {
     @Pattern(regexp = "^[A-Z]{3}$", message = "Currency must be a valid ISO 4217 code")
     private String currency;
 
-    @NotBlank(message = "Transaction Type should not be empty")
+    @NotNull(message = "Transaction Type should not be empty")
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
 
