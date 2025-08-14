@@ -70,3 +70,5 @@ Track latency metrics (transaction ingestion to alert creation) to detect pipeli
 Centralized logging (e.g., ELK or OpenTelemetry) for tracing transactions through the pipeline.
 
 High availability for Kafka, Redis, and alert DB.
+
+## Quick Start

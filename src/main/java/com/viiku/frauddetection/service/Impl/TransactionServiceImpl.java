@@ -26,9 +26,9 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository transactionRepository;
     private final RedisTemplate<String, Object> redisTemplate;
     private final TransactionMapper transactionMapper;
-    private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final KafkaTemplate<String, TransactionDto> kafkaTemplate;
 
-    public TransactionServiceImpl(TransactionRepository transactionRepository, RedisTemplate redisTemplate, TransactionMapper transactionMapper, KafkaTemplate<String, Object> kafkaTemplate) {
+    public TransactionServiceImpl(TransactionRepository transactionRepository, RedisTemplate redisTemplate, TransactionMapper transactionMapper, KafkaTemplate<String, TransactionDto> kafkaTemplate) {
         this.transactionRepository = transactionRepository;
         this.redisTemplate = redisTemplate;
         this.transactionMapper = transactionMapper;
@@ -39,13 +39,13 @@ public class TransactionServiceImpl implements TransactionService {
     public TransactionResponse processTransaction(TransactionRequest request) {
 
         TransactionDto transactionDto = buildTransactionDto(request);
-        TransactionEntity savedTransaction = transactionRepository.save(transactionMapper.mapToEntity(transactionDto));
+//        TransactionEntity savedTransaction = transactionRepository.save(transactionMapper.mapToEntity(transactionDto));
 //
 //        // Cache recent transaction for quick access
 //        cacheTransaction(transactionDto);
 //
 //        // Send to Kafka for fraud detection
-        kafkaTemplate.send("transaction-events", savedTransaction);
+        kafkaTemplate.send("transaction-events", transactionDto);
 //
 //        // Update metrics
 //        transactionCounter.increment();

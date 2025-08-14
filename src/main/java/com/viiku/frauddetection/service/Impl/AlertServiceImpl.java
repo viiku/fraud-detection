@@ -1,6 +1,7 @@
 package com.viiku.frauddetection.service.Impl;
 
 import com.viiku.frauddetection.models.dtos.FraudAlertDto;
+import com.viiku.frauddetection.models.dtos.TransactionDto;
 import com.viiku.frauddetection.models.entities.FraudAlertEntity;
 import com.viiku.frauddetection.models.mappers.FraudAlertMapper;
 import com.viiku.frauddetection.models.payloads.response.FraudAlertResponse;
@@ -16,11 +17,11 @@ import java.util.List;
 @Service
 public class AlertServiceImpl implements AlertService {
 
-    private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final KafkaTemplate<String, TransactionDto> kafkaTemplate;
     private final FraudAlertRepository fraudAlertRepository;
     private final FraudAlertMapper fraudAlertMapper;
 
-    public AlertServiceImpl(KafkaTemplate<String, Object> kafkaTemplate, FraudAlertRepository fraudAlertRepository, FraudAlertMapper fraudAlertMapper) {
+    public AlertServiceImpl(KafkaTemplate<String, TransactionDto> kafkaTemplate, FraudAlertRepository fraudAlertRepository, FraudAlertMapper fraudAlertMapper) {
         this.kafkaTemplate = kafkaTemplate;
         this.fraudAlertRepository = fraudAlertRepository;
         this.fraudAlertMapper = fraudAlertMapper;
@@ -32,7 +33,7 @@ public class AlertServiceImpl implements AlertService {
         FraudAlertEntity savedAlert = fraudAlertRepository.save(entity);
 
         // Send alert to notification system
-        kafkaTemplate.send("fraud-alerts", savedAlert);
+//        kafkaTemplate.send("fraud-alerts", savedAlert);
 
         log.info("Fraud alert created: {} for account: {}",
                 savedAlert.getAlertType(), savedAlert.getAccountId());

@@ -1,10 +1,9 @@
 package com.viiku.frauddetection.models.dtos;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.viiku.frauddetection.models.enums.TransactionChannel;
 import com.viiku.frauddetection.models.enums.TransactionType;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -28,4 +27,12 @@ public class TransactionDto {
     private String ipAddress;
     private String deviceId;
     private TransactionChannel channel;
+
+    @JsonCreator
+    public TransactionDto(
+        @JsonProperty("transactionId") String transactionId,
+        @JsonProperty("amount") BigDecimal amount) {
+            this.transactionId = transactionId;
+            this.amount = amount;
+        }
 }
