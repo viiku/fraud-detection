@@ -31,7 +31,7 @@ public class TransactionConsumer {
             @Header(KafkaHeaders.OFFSET) long offset,
             Acknowledgment acknowledgment) {
 
-        log.info("Received: {}", transactionDto);
+        log.info("Transaction events received: {}", transactionDto);
         try {
             log.info("Processing transaction: {} from topic: {}, partition: {}, offset: {}",
                     transactionDto.getTransactionId(), topic, partition, offset);

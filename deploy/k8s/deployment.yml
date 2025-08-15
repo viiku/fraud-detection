@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fraud-detection-deployment
+  namespace: fraud-detection
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fraud-detection
+  template:
+    metadata:
+      labels:
+        app: fraud-detection
+    spec:
+      containers:
+        - name: fraud-detection
+          image: fraud-detection:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: JAVA_OPTS
+              value: "-Xmx1g -Xms512m"
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10

@@ -38,18 +38,23 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public TransactionResponse processTransaction(TransactionRequest request) {
 
+        log.info("Processing raw transactions data in fraud detection system");
+
         TransactionDto transactionDto = buildTransactionDto(request);
-//        TransactionEntity savedTransaction = transactionRepository.save(transactionMapper.mapToEntity(transactionDto));
-//
+
+        log.info("Storing raw transactions data to db");
+        TransactionEntity savedTransaction = transactionRepository.save(transactionMapper.mapToEntity(transactionDto));
+
 //        // Cache recent transaction for quick access
 //        cacheTransaction(transactionDto);
-//
+
 //        // Send to Kafka for fraud detection
+        log.info("Sending transactions events to kafka");
         kafkaTemplate.send("transaction-events", transactionDto);
-//
+
 //        // Update metrics
 //        transactionCounter.increment();
-//
+
 //        log.info("Transaction processed: {}", savedTransaction.getTransactionId());
 //        return savedTransaction;
         return buildTransactionResponse(transactionDto);

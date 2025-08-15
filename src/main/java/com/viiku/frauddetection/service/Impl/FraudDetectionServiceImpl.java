@@ -4,7 +4,6 @@ import com.viiku.frauddetection.models.dtos.FraudAlertDto;
 import com.viiku.frauddetection.models.dtos.TransactionDto;
 import com.viiku.frauddetection.models.enums.AlertType;
 import com.viiku.frauddetection.models.enums.RiskLevel;
-import com.viiku.frauddetection.models.mappers.TransactionMapper;
 import com.viiku.frauddetection.models.payloads.response.TransactionResponse;
 import com.viiku.frauddetection.service.AlertService;
 import com.viiku.frauddetection.service.AnomalyDetectionService;
@@ -26,13 +25,11 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
     private final TransactionService transactionService;
     private final AnomalyDetectionService anomalyDetectionService;
     private final AlertService alertService;
-    private final TransactionMapper transactionMapper;
 
-    public FraudDetectionServiceImpl(TransactionService transactionService, AnomalyDetectionService anomalyDetectionService, AlertService alertService, TransactionMapper transactionMapper) {
+    public FraudDetectionServiceImpl(TransactionService transactionService, AnomalyDetectionService anomalyDetectionService, AlertService alertService) {
         this.transactionService = transactionService;
         this.anomalyDetectionService = anomalyDetectionService;
         this.alertService = alertService;
-        this.transactionMapper = transactionMapper;
     }
 
     @Override
