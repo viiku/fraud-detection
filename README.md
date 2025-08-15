@@ -1,74 +1,67 @@
-# Fraud Detection
+# 🚨 Fraud Detection System
 
-1. Transaction API
-   Current role: Entry point from banks into your system.
+A **real-time fraud detection tool** built with **Java** and **Spring Boot**, designed for extremely high throughput and scalable microservices environments. This project demonstrates modern fraud detection techniques, including rule-based and anomaly-based detection, leveraging Kafka, Redis, PostgreSQL, and container orchestration.
 
-Suggestions:
+---
 
-Add input validation + schema registry to ensure transaction data matches expected format. If using Kafka, Confluent Schema Registry + Avro/Protobuf helps avoid downstream errors.
+## ✨ Features
 
-Implement rate limiting or queue buffering to handle bank-side spikes.
+- **Real-time transaction analysis** via Kafka event streaming
+- **Rule-based & anomaly-based fraud detection**
+- **Scalable microservices architecture** (Docker, Kubernetes)
+- **Metrics & monitoring** (Prometheus, Grafana)
+- **RESTful APIs** for transaction and alert management
+- **OpenAPI documentation** for easy integration
 
-Use idempotency keys to prevent duplicate transactions on retries.
+---
 
-2. Kafka
-   Current role: Asynchronous event backbone.
+## 🚀 Quick Start
 
-Suggestions:
+### 1. Clone the repository
 
-Partition by accountId or customerId to keep transaction ordering per account.
+```sh
+git clone https://github.com/viiku/fraud-detection.git
+cd fraud-detection
+```
 
-Tune retention period in case fraud detection service goes down temporarily.
+### 2. Build the project
 
-Enable DLQ (Dead Letter Queue) for malformed/unprocessable events.
+```sh
+./mvnw clean package
+```
 
-Consider using Kafka Streams or ksqlDB for some simple fraud rules before hitting the main service (reduces load).
+### 3. Run with Docker Compose
 
-3. Fraud Detection Service
-   Current role: Consumes Kafka events, detects fraud, writes alerts.
+```sh
+cd deploy
+docker-compose up --build
+```
 
-Suggestions:
+### 4. Access the application
 
-Make it stateless for scalability, but keep historical patterns in a separate fast DB (like Redis, Cassandra, or PostgreSQL with indexes).
+- **API:** [http://localhost:8080/api/v1/transactions](http://localhost:8080/api/v1/transactions)
+- **Swagger UI:** [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+- **Grafana:** [http://localhost:3000](http://localhost:3000) (default user: admin / admin)
+- **Prometheus:** [http://localhost:9090](http://localhost:9090)
 
-Add circuit breaker and retry policies for downstream DB writes.
+---
 
-Consider real-time feature store (like Redis or Feast) for faster model-based fraud checks.
+## 📚 Documentation
 
-4. Alert Storage
-   Current role: Stores confirmed fraud alerts.
+- [API Docs (Swagger)](http://localhost:8080/swagger-ui.html)
+- [Prometheus Metrics](http://localhost:8080/actuator/prometheus)
 
-Suggestions:
+---
 
-Use a DB optimized for time-series or analytics (e.g., PostgreSQL + Timescale, ClickHouse, or Elasticsearch).
+## 🛠️ Technologies Used
 
-Keep audit logs immutable for compliance.
+- Java 21, Spring Boot
+- Kafka, Redis, PostgreSQL
+- Docker, Kubernetes
+- Prometheus, Grafana
 
-Partition by alert date for query performance.
+---
 
-5. Redis Cache
-   Current role: Keeps recent fraud metrics for Grafana.
+## 🤝 Contributing
 
-Suggestions:
-
-Consider using Prometheus instead of Redis for metrics, since Grafana integrates seamlessly. Redis can still store hot transactional data for fraud checks.
-
-If Redis is used for both metrics + feature store, keep them in separate logical databases to avoid key collisions.
-
-6. Metrics → Grafana
-   Suggestions:
-
-Push from fraud detection service → Prometheus → Grafana (more standard).
-
-Use alerts in Grafana so fraud spikes notify teams instantly.
-
-Track latency metrics (transaction ingestion to alert creation) to detect pipeline slowdowns.
-
-7. Reliability / Observability
-   Add a Kafka lag monitoring tool (Burrow, Conduktor, or Prometheus Kafka Exporter) to know if fraud detection service is falling behind.
-
-Centralized logging (e.g., ELK or OpenTelemetry) for tracing transactions through the pipeline.
-
-High availability for Kafka, Redis, and alert DB.
-
-## Quick Start
+Feel free to open issues or submit pull requests for improvements!
