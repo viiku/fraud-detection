@@ -1,13 +1,13 @@
 package com.viiku.frauddetection.alertservice.service;
 
-import com.viiku.frauddetection.alertservice.model.dto.FraudAlertDto;
+import com.viiku.frauddetection.alertservice.model.dto.AlertDto;
 import com.viiku.frauddetection.alertservice.model.dto.response.FraudAlertResponse;
 
 import java.util.List;
 
 public interface AlertService {
 
-    FraudAlertDto createAlert(FraudAlertDto fraudAlertDto);
+    AlertDto createAlert(AlertDto alertDto);
 
     List<FraudAlertResponse> getOpenAlerts();
 

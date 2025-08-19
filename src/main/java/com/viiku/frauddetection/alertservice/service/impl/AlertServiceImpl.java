@@ -1,11 +1,11 @@
 package com.viiku.frauddetection.alertservice.service.impl;
 
-import com.viiku.frauddetection.alertservice.model.dto.FraudAlertDto;
+import com.viiku.frauddetection.alertservice.model.dto.AlertDto;
 import com.viiku.frauddetection.detectionservice.models.dtos.TransactionDto;
-import com.viiku.frauddetection.alertservice.model.entity.FraudAlertEntity;
-import com.viiku.frauddetection.alertservice.model.mapper.FraudAlertMapper;
+import com.viiku.frauddetection.alertservice.model.entity.AlertEntity;
+import com.viiku.frauddetection.alertservice.model.mapper.AlertMapper;
 import com.viiku.frauddetection.alertservice.model.dto.response.FraudAlertResponse;
-import com.viiku.frauddetection.alertservice.repository.FraudAlertRepository;
+import com.viiku.frauddetection.alertservice.repository.AlertRepository;
 import com.viiku.frauddetection.alertservice.service.AlertService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -18,19 +18,19 @@ import java.util.List;
 public class AlertServiceImpl implements AlertService {
 
     private final KafkaTemplate<String, TransactionDto> kafkaTemplate;
-    private final FraudAlertRepository fraudAlertRepository;
-    private final FraudAlertMapper fraudAlertMapper;
+    private final AlertRepository alertRepository;
+    private final AlertMapper alertMapper;
 
-    public AlertServiceImpl(KafkaTemplate<String, TransactionDto> kafkaTemplate, FraudAlertRepository fraudAlertRepository, FraudAlertMapper fraudAlertMapper) {
+    public AlertServiceImpl(KafkaTemplate<String, TransactionDto> kafkaTemplate, AlertRepository alertRepository, AlertMapper alertMapper) {
         this.kafkaTemplate = kafkaTemplate;
-        this.fraudAlertRepository = fraudAlertRepository;
-        this.fraudAlertMapper = fraudAlertMapper;
+        this.alertRepository = alertRepository;
+        this.alertMapper = alertMapper;
     }
 
-    public FraudAlertDto createAlert(FraudAlertDto alertDto) {
+    public AlertDto createAlert(AlertDto alertDto) {
 
-        FraudAlertEntity entity = fraudAlertMapper.mapToEntity(alertDto);
-        FraudAlertEntity savedAlert = fraudAlertRepository.save(entity);
+        AlertEntity entity = alertMapper.mapToEntity(alertDto);
+        AlertEntity savedAlert = alertRepository.save(entity);
 
         // Send alert to notification system
 //        kafkaTemplate.send("fraud-alerts", savedAlert);

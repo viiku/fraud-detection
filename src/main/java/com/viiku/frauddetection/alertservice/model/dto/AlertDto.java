@@ -10,7 +10,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class FraudAlertDto {
+public class AlertDto {
 
     private final Long id;
     private final String transactionId;

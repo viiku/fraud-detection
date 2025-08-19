@@ -19,7 +19,7 @@ import lombok.*;
                 @Index(name = "idx_transaction_id", columnList = "transactionId")
         }
 )
-public class FraudAlertEntity extends BaseEntity {
+public class AlertEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

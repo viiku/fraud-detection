@@ -24,7 +24,6 @@ public class TransactionConsumer {
             topics = "transaction-events",
             groupId = "fraud-detection-group"
     )
-
     public void processTransaction(
             @Payload TransactionDto transactionDto,
             @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
@@ -41,9 +40,15 @@ public class TransactionConsumer {
 
             acknowledgment.acknowledge();
 
+        } catch (RetryableException e) {
+            // Send to retry topic
+            kafkaTemplate.send("transaction-events-retry", transaction);
+            ack.acknowledge();
+            throw new RuntimeException(e);
         } catch (Exception e) {
             log.error("Error processing transaction: {}", transactionDto.getTransactionId(), e);
             // Could implement retry logic or DLQ here
+
         }
     }
 }

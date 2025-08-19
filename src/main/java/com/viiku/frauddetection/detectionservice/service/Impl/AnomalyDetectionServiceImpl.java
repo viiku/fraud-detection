@@ -1,6 +1,6 @@
 package com.viiku.frauddetection.detectionservice.service.Impl;
 
-import com.viiku.frauddetection.alertservice.model.dto.FraudAlertDto;
+import com.viiku.frauddetection.alertservice.model.dto.AlertDto;
 import com.viiku.frauddetection.detectionservice.models.dtos.TransactionDto;
 import com.viiku.frauddetection.detectionservice.service.AnomalyDetectionService;
 import com.viiku.frauddetection.detectionservice.service.TransactionService;
@@ -21,21 +21,21 @@ public class AnomalyDetectionServiceImpl implements AnomalyDetectionService {
     }
 
     @Override
-    public List<FraudAlertDto> detectAnomalies(TransactionDto transactionDto) {
+    public List<AlertDto> detectAnomalies(TransactionDto transactionDto) {
 
-        List<FraudAlertDto> fraudAlertDtoList = new ArrayList<>();
+        List<AlertDto> alertDtoList = new ArrayList<>();
 
         // Statistical anomaly detection
-        fraudAlertDtoList.addAll(detectStatisticalAnomalies(transactionDto));
+        alertDtoList.addAll(detectStatisticalAnomalies(transactionDto));
 
         // Pattern-based anomaly detection
-        fraudAlertDtoList.addAll(detectPatternAnomalies(transactionDto));
+        alertDtoList.addAll(detectPatternAnomalies(transactionDto));
 
-        return fraudAlertDtoList;
+        return alertDtoList;
     }
 
-    List<FraudAlertDto> detectStatisticalAnomalies(TransactionDto transactionDto) {
-        List<FraudAlertDto> alerts = new ArrayList<>();
+    List<AlertDto> detectStatisticalAnomalies(TransactionDto transactionDto) {
+        List<AlertDto> alerts = new ArrayList<>();
 
 //        List<TransactionDto> historicalTransactions = transactionService.getRecentTransactions(
 //                transactionDto.getAccountId());
@@ -78,8 +78,8 @@ public class AnomalyDetectionServiceImpl implements AnomalyDetectionService {
         return alerts;
     }
 
-    List<FraudAlertDto> detectPatternAnomalies(TransactionDto transactionDto) {
-        List<FraudAlertDto> alerts = new ArrayList<>();
+    List<AlertDto> detectPatternAnomalies(TransactionDto transactionDto) {
+        List<AlertDto> alerts = new ArrayList<>();
 
         // Implement pattern-based detection here
         // This could include machine learning models, behavioral patterns, etc.

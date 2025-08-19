@@ -1,6 +1,6 @@
 package com.viiku.frauddetection.detectionservice.service.Impl;
 
-import com.viiku.frauddetection.alertservice.model.dto.FraudAlertDto;
+import com.viiku.frauddetection.alertservice.model.dto.AlertDto;
 import com.viiku.frauddetection.detectionservice.models.dtos.TransactionDto;
 import com.viiku.frauddetection.alertservice.model.enums.AlertType;
 import com.viiku.frauddetection.detectionservice.models.enums.RiskLevel;
@@ -37,7 +37,7 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
 //        Timer.Sample sample = Timer.start();
 //
         try {
-            List<FraudAlertDto> alerts = new ArrayList<>();
+            List<AlertDto> alerts = new ArrayList<>();
 
             // Rule-based detection
             alerts.addAll(runRuleBasedDetection(transactionDto));
@@ -59,9 +59,9 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
 
     }
 
-    private List<FraudAlertDto> runRuleBasedDetection(TransactionDto transactionDto) {
+    private List<AlertDto> runRuleBasedDetection(TransactionDto transactionDto) {
 
-        List<FraudAlertDto> alerts = new ArrayList<>();
+        List<AlertDto> alerts = new ArrayList<>();
 
         log.debug("Checking High Amount Transaction Rule for transaction Id: {}", transactionDto.getTransactionId());
         alerts.addAll(checkHighAmountRule(transactionDto));
@@ -83,13 +83,13 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
      * @param transactionDto
      * @return
      */
-    private List<FraudAlertDto> checkHighAmountRule(TransactionDto transactionDto) {
+    private List<AlertDto> checkHighAmountRule(TransactionDto transactionDto) {
 
-        List<FraudAlertDto> alerts = new ArrayList<>();
+        List<AlertDto> alerts = new ArrayList<>();
         BigDecimal threshold = new BigDecimal("10000");
 
         if (transactionDto.getAmount().compareTo(threshold) > 0) {
-            FraudAlertDto alert = FraudAlertDto.builder()
+            AlertDto alert = AlertDto.builder()
                     .transactionId(transactionDto.getTransactionId())
                     .accountId(transactionDto.getAccountId())
                     .alertType(AlertType.HIGH_AMOUNT)
@@ -109,15 +109,15 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
      * @param transactionDto
      * @return
      */
-    private List<FraudAlertDto> checkVelocityRule(TransactionDto transactionDto) {
-        List<FraudAlertDto> alerts = new ArrayList<>();
+    private List<AlertDto> checkVelocityRule(TransactionDto transactionDto) {
+        List<AlertDto> alerts = new ArrayList<>();
         LocalDateTime oneHourAgo = LocalDateTime.now().minusHours(1);
 
         Long recentTransactionCount = transactionService.getTransactionCountSince(
                 transactionDto.getAccountId(), oneHourAgo);
 
         if (recentTransactionCount > 10) {
-            FraudAlertDto alert = FraudAlertDto.builder()
+            AlertDto alert = AlertDto.builder()
                     .transactionId(transactionDto.getTransactionId())
                     .accountId(transactionDto.getAccountId())
                     .alertType(AlertType.HIGH_VELOCITY)
@@ -132,15 +132,15 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
         return alerts;
     }
 
-    private List<FraudAlertDto> checkTimeBasedRule(TransactionDto transactionDto) {
-        List<FraudAlertDto> alerts = new ArrayList<>();
+    private List<AlertDto> checkTimeBasedRule(TransactionDto transactionDto) {
+        List<AlertDto> alerts = new ArrayList<>();
         LocalTime transactionTime = transactionDto.getTimestamp().toLocalTime();
 
         // Unusual hours (2 AM - 6 AM)
         if (transactionTime.isAfter(LocalTime.of(2, 0)) &&
                 transactionTime.isBefore(LocalTime.of(6, 0))) {
 
-            FraudAlertDto alert = FraudAlertDto.builder()
+            AlertDto alert = AlertDto.builder()
                     .transactionId(transactionDto.getTransactionId())
                     .accountId(transactionDto.getAccountId())
                     .alertType(AlertType.UNUSUAL_TIME)
@@ -155,8 +155,8 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
         return alerts;
     }
 
-    private List<FraudAlertDto> checkLocationRule(TransactionDto transactionDto) {
-        List<FraudAlertDto> alerts = new ArrayList<>();
+    private List<AlertDto> checkLocationRule(TransactionDto transactionDto) {
+        List<AlertDto> alerts = new ArrayList<>();
 
         // Get recent transactions for location comparison
         List<TransactionResponse> recentTransactions = transactionService.getRecentTransactions(
@@ -167,7 +167,7 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
                 .count() == recentTransactions.size();
 
         if (locationMismatch && !recentTransactions.isEmpty()) {
-            FraudAlertDto alert = FraudAlertDto.builder()
+            AlertDto alert = AlertDto.builder()
                     .transactionId(transactionDto.getTransactionId())
                     .accountId(transactionDto.getAccountId())
                     .alertType(AlertType.LOCATION_ANOMALY)

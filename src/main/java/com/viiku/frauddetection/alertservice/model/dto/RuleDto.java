@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FraudRuleDto {
+public class RuleDto {
 
     private String ruleName;
     private BigDecimal maxAmount;
