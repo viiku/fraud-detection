@@ -8,9 +8,8 @@ import com.viiku.frauddetection.detectionservice.models.dtos.request.Transaction
 import com.viiku.frauddetection.detectionservice.models.dtos.response.TransactionResponse;
 import com.viiku.frauddetection.detectionservice.repository.TransactionRepository;
 import com.viiku.frauddetection.detectionservice.service.TransactionService;
+import io.micrometer.core.instrument.Counter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -33,12 +32,14 @@ public class TransactionServiceImpl implements TransactionService {
     private final RedisTemplate<String, Object> redisTemplate;
     private final TransactionMapper transactionMapper;
     private final KafkaTemplate<String, TransactionDto> kafkaTemplate;
+    private final Counter transactionCounter;
 
-    public TransactionServiceImpl(TransactionRepository transactionRepository, RedisTemplate redisTemplate, TransactionMapper transactionMapper, KafkaTemplate<String, TransactionDto> kafkaTemplate) {
+    public TransactionServiceImpl(TransactionRepository transactionRepository, RedisTemplate redisTemplate, TransactionMapper transactionMapper, KafkaTemplate<String, TransactionDto> kafkaTemplate, Counter transactionCounter) {
         this.transactionRepository = transactionRepository;
         this.redisTemplate = redisTemplate;
         this.transactionMapper = transactionMapper;
         this.kafkaTemplate = kafkaTemplate;
+        this.transactionCounter = transactionCounter;
     }
 
     /**
@@ -64,8 +65,8 @@ public class TransactionServiceImpl implements TransactionService {
         log.info("Sending transactions events to kafka");
         kafkaTemplate.send("transaction-events", transactionDto);
 
-//        // Update metrics
-//        transactionCounter.increment();
+        // Update metrics
+        transactionCounter.increment();
 
 //        log.info("Transaction processed: {}", savedTransaction.getTransactionId());
 //        return savedTransaction;

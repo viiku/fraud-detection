@@ -3,6 +3,8 @@
 A **real-time fraud detection tool** built with **Java** and **Spring Boot**, designed for extremely high throughput and scalable microservices environments. This project demonstrates modern fraud detection techniques, including rule-based and anomaly-based detection, leveraging Kafka, Redis, PostgreSQL, and container orchestration.
 
 ---
+## Flow Diagram
+![img.png](img.png)
 
 ## ✨ Features
 

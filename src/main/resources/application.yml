@@ -3,7 +3,6 @@ spring:
     name: fraud-detection
     server:
       port: 8080
-#logging.level.org.springframework=DEBUG
 
   # Database connection
   datasource:
@@ -46,6 +45,29 @@ spring:
       properties:
         spring.json.trusted.packages: "*"
 
+# cache
   cache:
     redis:
       time-to-live: 3600000 # 1 hour in ms
+
+# Management
+management:
+  endpoints:
+    web:
+      exposure:
+#        include: "*" # In dev only
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+# Logging
+logging:
+  level:
+    com.frauddetection: INFO
+    org.springframework.kafka: WARN
+    org.hibernate.SQL: WARN
