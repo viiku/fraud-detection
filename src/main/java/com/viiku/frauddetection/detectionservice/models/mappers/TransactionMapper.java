@@ -3,8 +3,13 @@ package com.viiku.frauddetection.detectionservice.models.mappers;
 import com.viiku.frauddetection.common.model.mapper.BaseMapper;
 import com.viiku.frauddetection.detectionservice.models.dtos.TransactionDto;
 import com.viiku.frauddetection.detectionservice.models.entities.TransactionEntity;
+import com.viiku.frauddetection.detectionservice.models.enums.TransactionChannel;
+import com.viiku.frauddetection.detectionservice.models.enums.TransactionType;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Component
 @Qualifier("packageMapper")
@@ -34,6 +39,19 @@ public class TransactionMapper implements BaseMapper<TransactionDto, Transaction
 
     @Override
     public TransactionDto mapToDto(TransactionEntity entity) {
-        return null;
+        return TransactionDto.builder()
+                .transactionId(entity.getTransactionId())
+                .accountId(entity.getAccountId())
+                .bankId(entity.getBankId())
+                .amount(entity.getAmount())
+                .currency(entity.getCurrency())
+                .transactionType(entity.getTransactionType())
+                .merchantId(entity.getMerchantId())
+                .location(entity.getLocation())
+                .timestamp(entity.getTimestamp())
+                .ipAddress(entity.getIpAddress())
+                .deviceId(entity.getDeviceId())
+                .channel(entity.getChannel())
+                .build();
     }
 }

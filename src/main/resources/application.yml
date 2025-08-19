@@ -1,6 +1,6 @@
 spring:
   application:
-    name: fraud-detection-system
+    name: fraud-detection
     server:
       port: 8080
 #logging.level.org.springframework=DEBUG

@@ -75,7 +75,7 @@ public class TransactionServiceImpl implements TransactionService {
      * @return list of transactions for given accountId
      */
     @Override
-    @Cacheable(value = "recentTransactions", key = "#accountId")
+//    @Cacheable(value = "recentTransactions", key = "#accountId")
     public List<TransactionResponse> getRecentTransactions(String accountId) {
 
         List<TransactionEntity> transactionEntities = transactionRepository.findRecentTransactionsByAccount(

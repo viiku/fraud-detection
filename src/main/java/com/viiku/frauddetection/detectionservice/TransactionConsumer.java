@@ -40,12 +40,13 @@ public class TransactionConsumer {
 
             acknowledgment.acknowledge();
 
-        } catch (RetryableException e) {
-            // Send to retry topic
-            kafkaTemplate.send("transaction-events-retry", transaction);
-            ack.acknowledge();
-            throw new RuntimeException(e);
-        } catch (Exception e) {
+        }
+//        catch (RetryableException e) {
+//            // Send to retry topic
+//            kafkaTemplate.send("transaction-events-retry", transaction);
+//            ack.acknowledge();
+//            throw new RuntimeException(e);
+         catch (Exception e) {
             log.error("Error processing transaction: {}", transactionDto.getTransactionId(), e);
             // Could implement retry logic or DLQ here
 
