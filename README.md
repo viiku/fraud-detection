@@ -4,7 +4,7 @@ A **real-time fraud detection tool** built with **Java** and **Spring Boot**, de
 
 ---
 ## Flow Diagram
-![img.png](img.png)
+![img.png](arch.png)
 
 ## ✨ Features
 
