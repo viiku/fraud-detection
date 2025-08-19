@@ -1,6 +1,6 @@
 package com.viiku.frauddetection.common.config;
 
-import com.viiku.frauddetection.models.dtos.TransactionDto;
+import com.viiku.frauddetection.detectionservice.models.dtos.TransactionDto;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
