@@ -10,7 +10,7 @@ public interface TransactionService {
 
     TransactionResponse processTransaction(TransactionRequest request);
 
-    List<TransactionResponse> getRecentTransactions(String accountId);
+    List<TransactionResponse> getRecentTransactions(String accountId, int pageNumber, int pageSize);
 
     Long getTransactionCountSince(String accountId, LocalDateTime oneHourAgo);
 }

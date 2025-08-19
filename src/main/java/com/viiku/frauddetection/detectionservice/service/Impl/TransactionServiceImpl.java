@@ -10,6 +10,9 @@ import com.viiku.frauddetection.detectionservice.repository.TransactionRepositor
 import com.viiku.frauddetection.detectionservice.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -76,8 +79,11 @@ public class TransactionServiceImpl implements TransactionService {
      */
     @Override
 //    @Cacheable(value = "recentTransactions", key = "#accountId")
-    public List<TransactionResponse> getRecentTransactions(String accountId) {
+    public List<TransactionResponse> getRecentTransactions(String accountId, int pageNumber, int pageSize) {
 
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+//        Page<TransactionEntity> transactionEntities = transactionRepository.findRecentTransactionsByAccount(accountId,
+//                LocalDateTime.now().minusHours(24));
         List<TransactionEntity> transactionEntities = transactionRepository.findRecentTransactionsByAccount(
                 accountId, LocalDateTime.now().minusHours(24));
 

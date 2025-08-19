@@ -160,7 +160,7 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
 
         // Get recent transactions for location comparison
         List<TransactionResponse> recentTransactions = transactionService.getRecentTransactions(
-                transactionDto.getAccountId());
+                transactionDto.getAccountId(), 1, 10);
 
         boolean locationMismatch = recentTransactions.stream()
                 .filter(t -> !t.getLocation().equals(transactionDto.getLocation()))
