@@ -21,8 +21,8 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Run tests
-        run: ./mvnw clean test
+#      - name: Run tests
+#        run: ./mvnw clean test
 
       - name: Build backend
         working-directory: .
@@ -70,7 +70,7 @@ jobs:
 
       - name: Build & Analyze
         run: mvn clean verify sonar:sonar \
-          -Dsonar.projectKey=vikku26_fraud-detection \
-          -Dsonar.organization=vikku26 \
+          -Dsonar.projectKey=fraud-detection \
+          -Dsonar.organization=viiku \
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
