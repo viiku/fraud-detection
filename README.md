@@ -2,14 +2,14 @@
 
 # Fraud Detection
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=vikku26_fraud-detection&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=vikku26_fraud-detection)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=vikku26_fraud-detection&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=vikku26_fraud-detection)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=vikku26_fraud-detection&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=vikku26_fraud-detection)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=vikku26_fraud-detection&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=vikku26_fraud-detection)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=vikku26_fraud-detection&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=vikku26_fraud-detection)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=vikku26_fraud-detection&metric=bugs)](https://sonarcloud.io/summary/new_code?id=vikku26_fraud-detection)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=vikku26_fraud-detection&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=vikku26_fraud-detection)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=vikku26_fraud-detection&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=vikku26_fraud-detection)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fraud-detection&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=fraud-detection)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=fraud-detection&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=fraud-detection)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=fraud-detection&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=fraud-detection)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=fraud-detection&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=fraud-detection)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=fraud-detection&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=fraud-detection)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=fraud-detection&metric=bugs)](https://sonarcloud.io/summary/new_code?id=fraud-detection)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=fraud-detection&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=fraud-detection)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=fraud-detection&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=fraud-detection)
 
 
 A **real-time fraud detection tool** built with **Java** and **Spring Boot**, designed for extremely high throughput and scalable microservices environments. This project demonstrates modern fraud detection techniques, including rule-based and anomaly-based detection, leveraging Kafka, Redis, PostgreSQL, and container orchestration.

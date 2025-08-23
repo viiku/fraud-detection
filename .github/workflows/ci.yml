@@ -48,7 +48,7 @@ jobs:
         run: echo "Deploy your app here (e.g., kubectl apply, ssh, etc.)"
 
   sonarcloud:
-    name: SonarCloud Analysis
+    name: SonarCloud
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

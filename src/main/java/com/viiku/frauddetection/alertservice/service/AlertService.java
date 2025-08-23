@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface AlertService {
 
-    AlertDto createAlert(AlertDto alertDto);
+    void createAlert(AlertDto alertDto);
 
     List<AlertResponse> getOpenAlerts();
 

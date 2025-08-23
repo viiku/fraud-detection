@@ -26,20 +26,27 @@ public class AlertServiceImpl implements AlertService {
         this.alertMapper = alertMapper;
     }
 
-    public AlertDto createAlert(AlertDto alertDto) {
+    /**
+     * Create alert
+     * @param alertDto alertDto
+     */
+    public void createAlert(AlertDto alertDto) {
 
         AlertEntity entity = alertMapper.mapToEntity(alertDto);
+
+        log.info("Saving Alert to main database for accountId: {}", alertDto.getAccountId());
         AlertEntity savedAlert = alertRepository.save(entity);
 
         // Send alert to notification system
         kafkaTemplate.send("fraud-alerts", alertDto);
-
         log.info("Fraud alert created: {} for account: {}",
                 savedAlert.getAlertType(), savedAlert.getAccountId());
-
-        return alertDto;
     }
 
+    /**
+     * List all open alerts
+     * @return list
+     */
     @Override
     public List<AlertResponse> getOpenAlerts() {
 
@@ -47,12 +54,23 @@ public class AlertServiceImpl implements AlertService {
         return List.of();
     }
 
+    /**
+     * List of alerts
+     * @param accountId account
+     * @return list
+     */
     @Override
     public List<AlertResponse> getAlertsByAccount(String accountId) {
         List<AlertEntity> alertEntityList = alertRepository.findByAccountId(accountId);
         return List.of();
     }
 
+    /**
+     * Update Alert
+     * @param alertId inputs alertId
+     * @param status set alertStatus
+     * @return alertResponse
+     */
     @Override
     public AlertResponse updateAlertStatus(Long alertId, String status) {
         return null;
