@@ -17,4 +17,6 @@ public interface AlertRepository extends JpaRepository<AlertEntity, Long> {
 //    Long countAlertsCreatedSince(@Param("since") LocalDateTime since);
 
     List<AlertEntity> findByRiskLevelAndStatus(String riskLevel, String status);
+
+    List<AlertEntity> findByAccountId(String accountId);
 }

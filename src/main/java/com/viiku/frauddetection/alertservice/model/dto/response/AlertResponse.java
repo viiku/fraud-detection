@@ -1,19 +1,19 @@
-package com.viiku.frauddetection.alertservice.model.dto;
+package com.viiku.frauddetection.alertservice.model.dto.response;
 
 import com.viiku.frauddetection.alertservice.model.enums.AlertStatus;
 import com.viiku.frauddetection.alertservice.model.enums.AlertType;
 import com.viiku.frauddetection.transactionservice.models.enums.RiskLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
+@Setter
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
-public class AlertDto {
+public class AlertResponse {
 
-    private final Long id;
-    private final String transactionId;
+    private Long id;
+    private String transactionId;
     private String accountId;
     private AlertType alertType;
     private RiskLevel riskLevel;

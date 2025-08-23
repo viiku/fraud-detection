@@ -2,7 +2,7 @@ package com.viiku.frauddetection.alertservice.model.entity;
 
 import com.viiku.frauddetection.common.model.entity.BaseEntity;
 import com.viiku.frauddetection.alertservice.model.enums.AlertStatus;
-import com.viiku.frauddetection.detectionservice.models.enums.RiskLevel;
+import com.viiku.frauddetection.transactionservice.models.enums.RiskLevel;
 import jakarta.persistence.*;
 import lombok.*;
 
