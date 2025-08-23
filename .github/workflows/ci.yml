@@ -20,6 +20,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+          cache: 'maven'
 
 #      - name: Run tests
 #        run: ./mvnw clean test
@@ -31,7 +32,7 @@ jobs:
       # Build Docker image
       - name: Build Docker image
         run: |
-          docker build -t vikku26/fraud-detection:latest .
+          docker build -t vikku26/fraud-detection:latest . -f deploy/Dockerfile
 
       # Push Docker image (optional, requires DockerHub credentials)
       - name: Log in to DockerHub
@@ -68,9 +69,12 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
-      - name: Build & Analyze
-        run: mvn clean verify sonar:sonar \
-          -Dsonar.projectKey=fraud-detection \
-          -Dsonar.organization=viiku \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+#      - name: Build & Analyze
+#        run: mvn clean verify sonar:sonar \
+#          -Dsonar.projectKey=fraud-detection \
+#          -Dsonar.organization=viiku \
+#          -Dsonar.host.url=https://sonarcloud.io \
+#          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      - name: Run SonarQube Analysis
+        run: mvn clean verify sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
