@@ -58,7 +58,9 @@ public class TransactionServiceImpl implements TransactionService {
         log.info("Storing raw transactions data to db");
         TransactionEntity savedTransaction = transactionRepository.save(transactionMapper.mapToEntity(transactionDto));
 
-//        // Send to Kafka for fraud detection
+        // Send transactions data to Kafka for downstream
+        // detection service should subscribe this topic
+        // and do anomaly check many other checks
         log.info("Sending transactions events to kafka");
         kafkaTemplate.send("transaction-events", transactionDto);
 

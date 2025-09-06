@@ -15,8 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "transactions")
-
+@Table(name = "transactions_info")
 public class TransactionEntity extends BaseEntity {
 
     @Id

@@ -2,19 +2,21 @@
 //
 //import com.viiku.frauddetection.transactionservice.models.dtos.TransactionDto;
 //import com.viiku.frauddetection.transactionservice.service.FraudDetectionService;
+//import lombok.extern.slf4j.Slf4j;
 //import org.springframework.kafka.annotation.KafkaListener;
 //import org.springframework.kafka.support.Acknowledgment;
 //import org.springframework.kafka.support.KafkaHeaders;
 //import org.springframework.messaging.handler.annotation.Header;
 //import org.springframework.messaging.handler.annotation.Payload;
 //
+//@Slf4j
 //public class AlertConsumer {
 //
-//    private final Noti fraudDetectionService;
+////    private final Noti fraudDetectionService;
 //
-//    public TransactionConsumer(FraudDetectionService fraudDetectionService) {
-//        this.fraudDetectionService = fraudDetectionService;
-//    }
+////    public TransactionConsumer(FraudDetectionService fraudDetectionService) {
+////        this.fraudDetectionService = fraudDetectionService;
+////    }
 //
 //    @KafkaListener(
 //            topics = "transaction-events",

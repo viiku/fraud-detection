@@ -3,13 +3,17 @@ package com.viiku.frauddetection.alertservice.service.impl;
 import com.viiku.frauddetection.alertservice.model.dto.AlertDto;
 import com.viiku.frauddetection.alertservice.model.dto.response.AlertResponse;
 import com.viiku.frauddetection.alertservice.model.entity.AlertEntity;
+import com.viiku.frauddetection.alertservice.model.enums.AlertStatus;
+import com.viiku.frauddetection.alertservice.model.enums.AlertType;
 import com.viiku.frauddetection.alertservice.model.mapper.AlertMapper;
 import com.viiku.frauddetection.alertservice.repository.AlertRepository;
 import com.viiku.frauddetection.alertservice.service.AlertService;
+import com.viiku.frauddetection.transactionservice.models.enums.RiskLevel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -38,13 +42,14 @@ public class AlertServiceImpl implements AlertService {
         AlertEntity savedAlert = alertRepository.save(entity);
 
         // Send alert to notification system
+        // This topic should be subscribed by downstream services like Notification
         kafkaTemplate.send("fraud-alerts", alertDto);
         log.info("Fraud alert created: {} for account: {}",
                 savedAlert.getAlertType(), savedAlert.getAccountId());
     }
 
     /**
-     * List all open alerts
+     * List all open alerts for admin
      * @return list
      */
     @Override
@@ -62,7 +67,22 @@ public class AlertServiceImpl implements AlertService {
     @Override
     public List<AlertResponse> getAlertsByAccount(String accountId) {
         List<AlertEntity> alertEntityList = alertRepository.findByAccountId(accountId);
-        return List.of();
+
+        List<AlertResponse> alertResponseList = new ArrayList<>();
+        for (AlertEntity entity: alertEntityList) {
+            alertResponseList.add(
+                    AlertResponse.builder()
+                            .transactionId(entity.getTransactionId())
+                            .accountId(entity.getAccountId())
+                            .alertType(AlertType.HIGH_VELOCITY)
+                            .riskLevel(RiskLevel.CRITICAL)
+                            .description("Test Alert")
+                            .riskScore(1.12)
+                            .status(AlertStatus.OPEN)
+                            .build()
+            );
+        }
+        return alertResponseList;
     }
 
     /**

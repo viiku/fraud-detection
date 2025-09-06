@@ -39,7 +39,7 @@ public class TransactionRequest {
     private String merchantId;
     private String location;
 
-    @PastOrPresent(message = "Transaction timestamp cannot be in the future")
+//    @PastOrPresent(message = "Transaction timestamp cannot be in the future")
     private LocalDateTime timestamp;
 
     @Pattern(regexp = "^([0-9]{1,3}\\.){3}[0-9]{1,3}$", message = "Invalid IP address")

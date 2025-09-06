@@ -1,6 +1,7 @@
 package com.viiku.frauddetection.transactionservice.service.Impl;
 
 import com.viiku.frauddetection.alertservice.model.dto.AlertDto;
+import com.viiku.frauddetection.alertservice.model.enums.AlertStatus;
 import com.viiku.frauddetection.transactionservice.models.dtos.TransactionDto;
 import com.viiku.frauddetection.alertservice.model.enums.AlertType;
 import com.viiku.frauddetection.transactionservice.models.enums.RiskLevel;
@@ -39,13 +40,11 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
     @Override
     public void detectFraud(TransactionDto transactionDto) {
 //        Timer.Sample sample = Timer.start();
-//
+
         try {
             List<AlertDto> alerts = new ArrayList<>();
-
             // Rule-based detection
             alerts.addAll(runRuleBasedDetection(transactionDto));
-
             // Anomaly detection
             alerts.addAll(anomalyDetectionService.detectAnomalies(transactionDto));
 
@@ -105,6 +104,7 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
                     .riskLevel(RiskLevel.MEDIUM)
                     .description("Transaction amount exceeds threshold: " + threshold)
                     .riskScore(0.8)
+                    .status(AlertStatus.OPEN)
                     .build();
 
             alerts.add(alert);
@@ -133,6 +133,7 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
                     .riskLevel(RiskLevel.MEDIUM)
                     .description("High transaction velocity: " + recentTransactionCount + " transactions in 1 hour")
                     .riskScore(0.6)
+                    .status(AlertStatus.OPEN)
                     .build();
 
             alerts.add(alert);
@@ -161,6 +162,7 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
                     .riskLevel(RiskLevel.LOW)
                     .description("Transaction during unusual hours: " + transactionTime)
                     .riskScore(0.3)
+                    .status(AlertStatus.OPEN)
                     .build();
 
             alerts.add(alert);
@@ -193,11 +195,11 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
                     .riskLevel(RiskLevel.MEDIUM)
                     .description("Transaction from unusual location: " + transactionDto.getLocation())
                     .riskScore(0.5)
+                    .status(AlertStatus.OPEN)
                     .build();
 
             alerts.add(alert);
         }
         return alerts;
     }
-
 }

@@ -13,7 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(
-        name = "fraud_alert",
+        name = "fraud_alert_info",
         indexes = {
                 @Index(name = "idx_account_id", columnList = "accountId"),
                 @Index(name = "idx_transaction_id", columnList = "transactionId")

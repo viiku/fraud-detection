@@ -70,5 +70,5 @@ logging:
   level:
     com.frauddetection: INFO
     org.hibernate.SQL: WARN
-    org.apache.kafka: DEBUG
-    org.springframework.kafka: DEBUG
+    org.apache.kafka: WARN
+    org.springframework.kafka: WARN

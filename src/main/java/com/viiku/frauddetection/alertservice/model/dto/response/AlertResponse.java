@@ -12,7 +12,6 @@ import lombok.*;
 @AllArgsConstructor
 public class AlertResponse {
 
-    private Long id;
     private String transactionId;
     private String accountId;
     private AlertType alertType;

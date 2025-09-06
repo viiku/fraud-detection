@@ -42,11 +42,11 @@ public class TransactionController {
     @Operation(summary = "Get recent transactions for an account")
     public ResponseEntity<List<TransactionResponse>> getRecentTransactions(
             @PathVariable String accountId,
-            @RequestParam(defaultValue = "1") int pageNumber,
-            @RequestParam(defaultValue = "10") int pageSize) {
+            @RequestParam(defaultValue = "1") int number,
+            @RequestParam(defaultValue = "10") int size) {
 
         // Service returns Spring Data Page<TransactionResponse>
-        List<TransactionResponse> transactionResponseList = transactionService.getRecentTransactions(accountId, pageNumber, pageSize);
+        List<TransactionResponse> transactionResponseList = transactionService.getRecentTransactions(accountId, number, size);
 
         // Convert into CustomPage
 //        CustomPage<TransactionResponse> customPage = CustomPage.of(page.getContent(), page);
